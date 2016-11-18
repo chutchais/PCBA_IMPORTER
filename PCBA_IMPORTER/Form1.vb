@@ -191,13 +191,13 @@ Public Class Form1
 
                 'Get Component--
                 Dim vRstComponent As ADODB.Recordset
-
+                vRstComponent = objFits.getComponentData(.serialnumber)
                 '---------------
 
 
 
                 '.makeXML(Nothing, vTestDataRst)
-                .makeXML(objFits.getParameters(.serialnumber, .sn_attr_code, .trans_seq), vTestDataRst)
+                .makeXML(objFits.getParameters(.serialnumber, .sn_attr_code, .trans_seq), vTestDataRst, vRstComponent)
 
 
 

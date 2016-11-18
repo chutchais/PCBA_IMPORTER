@@ -53,23 +53,25 @@ Partial Class Form1
         '
         'StatusStrip1
         '
+        Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tssDatabase, Me.tssStatus})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 136)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 169)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(523, 22)
+        Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 19, 0)
+        Me.StatusStrip1.Size = New System.Drawing.Size(697, 25)
         Me.StatusStrip1.TabIndex = 0
         Me.StatusStrip1.Text = "StatusStrip1"
         '
         'tssDatabase
         '
         Me.tssDatabase.Name = "tssDatabase"
-        Me.tssDatabase.Size = New System.Drawing.Size(88, 17)
+        Me.tssDatabase.Size = New System.Drawing.Size(110, 20)
         Me.tssDatabase.Text = "Program ready."
         '
         'tssStatus
         '
         Me.tssStatus.Name = "tssStatus"
-        Me.tssStatus.Size = New System.Drawing.Size(78, 17)
+        Me.tssStatus.Size = New System.Drawing.Size(98, 20)
         Me.tssStatus.Text = "Import Status"
         '
         'gbImport
@@ -80,9 +82,11 @@ Partial Class Form1
         Me.gbImport.Controls.Add(Me.Label3)
         Me.gbImport.Controls.Add(Me.lblPeriod)
         Me.gbImport.Controls.Add(Me.Label2)
-        Me.gbImport.Location = New System.Drawing.Point(12, 1)
+        Me.gbImport.Location = New System.Drawing.Point(16, 1)
+        Me.gbImport.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.gbImport.Name = "gbImport"
-        Me.gbImport.Size = New System.Drawing.Size(355, 60)
+        Me.gbImport.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.gbImport.Size = New System.Drawing.Size(473, 74)
         Me.gbImport.TabIndex = 1
         Me.gbImport.TabStop = False
         Me.gbImport.Text = "Build Type"
@@ -90,62 +94,69 @@ Partial Class Form1
         'lblLastDate
         '
         Me.lblLastDate.AutoSize = True
-        Me.lblLastDate.Location = New System.Drawing.Point(88, 42)
+        Me.lblLastDate.Location = New System.Drawing.Point(117, 52)
+        Me.lblLastDate.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblLastDate.Name = "lblLastDate"
-        Me.lblLastDate.Size = New System.Drawing.Size(39, 13)
+        Me.lblLastDate.Size = New System.Drawing.Size(51, 17)
         Me.lblLastDate.TabIndex = 1
         Me.lblLastDate.Text = "Label2"
         '
         'lblLoop
         '
         Me.lblLoop.AutoSize = True
-        Me.lblLoop.Location = New System.Drawing.Point(288, 20)
+        Me.lblLoop.Location = New System.Drawing.Point(384, 25)
+        Me.lblLoop.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblLoop.Name = "lblLoop"
-        Me.lblLoop.Size = New System.Drawing.Size(13, 13)
+        Me.lblLoop.Size = New System.Drawing.Size(16, 17)
         Me.lblLoop.TabIndex = 3
         Me.lblLoop.Text = "5"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 42)
+        Me.Label1.Location = New System.Drawing.Point(8, 52)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(76, 13)
+        Me.Label1.Size = New System.Drawing.Size(101, 17)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Last datetime :"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(188, 20)
+        Me.Label3.Location = New System.Drawing.Point(251, 25)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(94, 13)
+        Me.Label3.Size = New System.Drawing.Size(126, 17)
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "Interval ( minute ) :"
         '
         'lblPeriod
         '
         Me.lblPeriod.AutoSize = True
-        Me.lblPeriod.Location = New System.Drawing.Point(85, 20)
+        Me.lblPeriod.Location = New System.Drawing.Point(113, 25)
+        Me.lblPeriod.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblPeriod.Name = "lblPeriod"
-        Me.lblPeriod.Size = New System.Drawing.Size(13, 13)
+        Me.lblPeriod.Size = New System.Drawing.Size(16, 17)
         Me.lblPeriod.TabIndex = 1
         Me.lblPeriod.Text = "6"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(6, 20)
+        Me.Label2.Location = New System.Drawing.Point(8, 25)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(81, 13)
+        Me.Label2.Size = New System.Drawing.Size(109, 17)
         Me.Label2.TabIndex = 0
         Me.Label2.Text = "Range ( hour ) :"
         '
         'btnDatabase
         '
-        Me.btnDatabase.Location = New System.Drawing.Point(374, 11)
+        Me.btnDatabase.Location = New System.Drawing.Point(499, 14)
+        Me.btnDatabase.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.btnDatabase.Name = "btnDatabase"
-        Me.btnDatabase.Size = New System.Drawing.Size(139, 32)
+        Me.btnDatabase.Size = New System.Drawing.Size(185, 39)
         Me.btnDatabase.TabIndex = 2
         Me.btnDatabase.Text = "&Connect Database"
         Me.btnDatabase.UseVisualStyleBackColor = True
@@ -153,18 +164,20 @@ Partial Class Form1
         'btnImport
         '
         Me.btnImport.Enabled = False
-        Me.btnImport.Location = New System.Drawing.Point(373, 43)
+        Me.btnImport.Location = New System.Drawing.Point(497, 53)
+        Me.btnImport.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.btnImport.Name = "btnImport"
-        Me.btnImport.Size = New System.Drawing.Size(139, 32)
+        Me.btnImport.Size = New System.Drawing.Size(185, 39)
         Me.btnImport.TabIndex = 3
         Me.btnImport.Text = "S&tart Import"
         Me.btnImport.UseVisualStyleBackColor = True
         '
         'btnExit
         '
-        Me.btnExit.Location = New System.Drawing.Point(374, 77)
+        Me.btnExit.Location = New System.Drawing.Point(499, 95)
+        Me.btnExit.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.btnExit.Name = "btnExit"
-        Me.btnExit.Size = New System.Drawing.Size(139, 32)
+        Me.btnExit.Size = New System.Drawing.Size(185, 39)
         Me.btnExit.TabIndex = 4
         Me.btnExit.Text = "&Exit"
         Me.btnExit.UseVisualStyleBackColor = True
@@ -177,9 +190,11 @@ Partial Class Form1
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.Label5)
         Me.GroupBox1.Controls.Add(Me.Label4)
-        Me.GroupBox1.Location = New System.Drawing.Point(14, 65)
+        Me.GroupBox1.Location = New System.Drawing.Point(19, 80)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(352, 65)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox1.Size = New System.Drawing.Size(469, 80)
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Next Run Details"
@@ -187,54 +202,60 @@ Partial Class Form1
         'lblNextRun
         '
         Me.lblNextRun.AutoSize = True
-        Me.lblNextRun.Location = New System.Drawing.Point(70, 43)
+        Me.lblNextRun.Location = New System.Drawing.Point(93, 53)
+        Me.lblNextRun.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblNextRun.Name = "lblNextRun"
-        Me.lblNextRun.Size = New System.Drawing.Size(25, 13)
+        Me.lblNextRun.Size = New System.Drawing.Size(32, 17)
         Me.lblNextRun.TabIndex = 5
         Me.lblNextRun.Text = "???"
         '
         'lblTo
         '
         Me.lblTo.AutoSize = True
-        Me.lblTo.Location = New System.Drawing.Point(218, 20)
+        Me.lblTo.Location = New System.Drawing.Point(291, 25)
+        Me.lblTo.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblTo.Name = "lblTo"
-        Me.lblTo.Size = New System.Drawing.Size(30, 13)
+        Me.lblTo.Size = New System.Drawing.Size(39, 17)
         Me.lblTo.TabIndex = 4
         Me.lblTo.Text = "lblTo"
         '
         'lblFrom
         '
         Me.lblFrom.AutoSize = True
-        Me.lblFrom.Location = New System.Drawing.Point(49, 22)
+        Me.lblFrom.Location = New System.Drawing.Point(65, 27)
+        Me.lblFrom.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblFrom.Name = "lblFrom"
-        Me.lblFrom.Size = New System.Drawing.Size(40, 13)
+        Me.lblFrom.Size = New System.Drawing.Size(54, 17)
         Me.lblFrom.TabIndex = 3
         Me.lblFrom.Text = "lblFrom"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(6, 43)
+        Me.Label6.Location = New System.Drawing.Point(8, 53)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(58, 13)
+        Me.Label6.Size = New System.Drawing.Size(74, 17)
         Me.Label6.TabIndex = 2
         Me.Label6.Text = "Next Run :"
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(186, 20)
+        Me.Label5.Location = New System.Drawing.Point(248, 25)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(26, 13)
+        Me.Label5.Size = New System.Drawing.Size(33, 17)
         Me.Label5.TabIndex = 1
         Me.Label5.Text = "To :"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(7, 20)
+        Me.Label4.Location = New System.Drawing.Point(9, 25)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(36, 13)
+        Me.Label4.Size = New System.Drawing.Size(48, 17)
         Me.Label4.TabIndex = 0
         Me.Label4.Text = "From :"
         '
@@ -247,18 +268,19 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(383, 110)
+        Me.Button1.Location = New System.Drawing.Point(511, 135)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(39, 26)
+        Me.Button1.Size = New System.Drawing.Size(52, 32)
         Me.Button1.TabIndex = 6
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(523, 158)
+        Me.ClientSize = New System.Drawing.Size(697, 194)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.btnExit)
@@ -266,9 +288,10 @@ Partial Class Form1
         Me.Controls.Add(Me.btnDatabase)
         Me.Controls.Add(Me.gbImport)
         Me.Controls.Add(Me.StatusStrip1)
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Fits Importer"
+        Me.Text = "PCBA Importer"
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         Me.gbImport.ResumeLayout(False)

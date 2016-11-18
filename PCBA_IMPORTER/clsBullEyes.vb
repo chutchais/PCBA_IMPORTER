@@ -207,7 +207,10 @@ Public Class clsBullEyes
         End Set
     End Property
 
-    Public Sub makeXML(rstParameter As ADODB.Recordset, Optional rstTestData As ADODB.Recordset = Nothing)
+    Public Sub makeXML(rstParameter As ADODB.Recordset,
+                       Optional rstTestData As ADODB.Recordset = Nothing,
+                       Optional rstComponentData As ADODB.Recordset = Nothing)
+
         Dim vXMLFile As String = vOperation & "_" & vSerialNumber & "_" & vTransSeq & "_" & vSnAtrrCode & ".xml"
 
 
@@ -299,6 +302,63 @@ Public Class clsBullEyes
                         paramsNode.AppendChild(paramNode)
                         .MoveNext()
                     Loop
+                End With
+
+
+                'For Component Data -- add by Chutchai S on Nov 18,2016
+                If rstComponentData Is Nothing Then
+                    GoTo NoTestData
+                End If
+
+                'If rstTestData.State Then
+                '    GoTo NoTestData
+                'End If
+
+                With rstComponentData
+                    Dim componentsNode As XmlNode = doc.CreateElement("components")
+                    Do While Not .EOF
+                        Dim partNode As XmlNode = doc.CreateElement("part")
+
+                        Dim codeAttr As XmlNode = doc.CreateAttribute("part_id")
+                        codeAttr.Value = Trim(.Fields("IQR").Value)
+                        partNode.Attributes.Append(codeAttr)
+
+                        Dim descAttr As XmlNode = doc.CreateAttribute("part_no")
+                        descAttr.Value = IIf(IsDBNull(.Fields("fbn_partno").Value), "", Trim(.Fields("fbn_partno").Value))
+                        partNode.Attributes.Append(descAttr)
+
+                        Dim minAttr As XmlNode = doc.CreateAttribute("rd")
+                        minAttr.Value = IIf(IsDBNull(.Fields("display").Value), "", .Fields("display").Value)
+                        partNode.Attributes.Append(minAttr)
+
+                        Dim maxAttr As XmlNode = doc.CreateAttribute("mfg_partno")
+                        maxAttr.Value = IIf(IsDBNull(.Fields("mfg_partno").Value), "", .Fields("mfg_partno").Value)
+                        partNode.Attributes.Append(maxAttr)
+
+                        Dim resultAttr As XmlNode = doc.CreateAttribute("mfg_datecode")
+                        resultAttr.Value = IIf(IsDBNull(.Fields("datecode").Value), "", Trim(.Fields("datecode").Value))
+                        partNode.Attributes.Append(resultAttr)
+
+                        Dim lotAttr As XmlNode = doc.CreateAttribute("mfg_lotcode")
+                        lotAttr.Value = IIf(IsDBNull(.Fields("lotcode").Value), "", Trim(.Fields("lotcode").Value))
+                        partNode.Attributes.Append(lotAttr)
+
+                        Dim supplyAttr As XmlNode = doc.CreateAttribute("mfg_name")
+                        supplyAttr.Value = IIf(IsDBNull(.Fields("mfg_name").Value), "", Trim(.Fields("mfg_name").Value))
+                        partNode.Attributes.Append(supplyAttr)
+
+                        Dim rtAttr As XmlNode = doc.CreateAttribute("rtno")
+                        rtAttr.Value = IIf(IsDBNull(.Fields("rt_no").Value), "", Trim(.Fields("rt_no").Value))
+                        partNode.Attributes.Append(rtAttr)
+
+                        'Patr Serial number
+                        partNode.InnerText = ""
+
+                        componentsNode.AppendChild(partNode)
+                        .MoveNext()
+                    Loop
+                    'Append to root
+                    rootNode.AppendChild(componentsNode)
                 End With
 NoTestData:
 

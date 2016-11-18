@@ -156,6 +156,28 @@ Public Class clsFits
 
     End Function
 
+    Public Function getComponentData(vSerialnumber As String) As ADODB.Recordset
+
+        Dim vSql As String = "select * " & _
+                            "from vw_SMTUnitComponentTracking " & _
+                            "where serial_no=?"
+
+        Dim cmd As New ADODB.Command()
+        Dim sSnParam As ADODB.Parameter
+        'sStationParam,
+        With cmd
+            .ActiveConnection = cn
+            .CommandText = vSql
+            .CommandType = CommandTypeEnum.adCmdText
+            sSnParam = .CreateParameter("vSerialnumber", DataTypeEnum.adVarChar, _
+                                                 ParameterDirectionEnum.adParamInput, 50, vSerialnumber)
+            .Parameters.Append(sSnParam)
+
+            getComponentData = .Execute
+        End With
+
+    End Function
+
     Public Function getEvents(vSerialnumber As String) As ADODB.Recordset
         'Date format : 2016-07-01
         'Dim vSql As String = "select event.*,operation_map.description as operation_name " & _
@@ -567,23 +589,14 @@ NextLoop:
     End Function
 
 
-    Public Function getComponentData(vSerialnumber As String, vProcess As String, _
-                                ByRef vTester As String, vDatetime As String) As ADODB.Recordset
-        'Date format : 2016-07-01
-        'Dim vSql As String = "select id,station_id,start_date_time,uut_status,process,tps_name " & _
-        '                    "from uut_result " & _
-        '                    "where uut_serial_number=?  " & _
-        '                    "and station_id=? " & _
-        '                    "and process=? and start_date_time <= ? " & _
-        '                    "order by id"
-        Dim vSql As String = "select id,station_id,start_date_time,uut_status,process,tps_name " & _
-                    "from uut_result " & _
-                    "where uut_serial_number=?  " & _
-                    "and process=? and start_date_time <= ? " & _
-                    "order by id"
+    Public Function getComponentData(vSerialnumber As String) As ADODB.Recordset
+
+        Dim vSql As String = "select * " & _
+                            "from vw_SMTUnitComponentTracking " & _
+                            "where serial_no=?"
 
         Dim cmd As New ADODB.Command()
-        Dim sSnParam, sProcessParam, sDdatetimeParam As ADODB.Parameter
+        Dim sSnParam As ADODB.Parameter
         'sStationParam,
         With cmd
             .ActiveConnection = cn
@@ -591,16 +604,8 @@ NextLoop:
             .CommandType = CommandTypeEnum.adCmdText
             sSnParam = .CreateParameter("vSerialnumber", DataTypeEnum.adVarChar, _
                                                  ParameterDirectionEnum.adParamInput, 50, vSerialnumber)
-            'sStationParam = .CreateParameter("vSerialnumber", DataTypeEnum.adVarChar, _
-            '                                     ParameterDirectionEnum.adParamInput, 50, vTester)
-            sProcessParam = .CreateParameter("vSerialnumber", DataTypeEnum.adVarChar, _
-                                                 ParameterDirectionEnum.adParamInput, 50, vProcess)
-            sDdatetimeParam = .CreateParameter("vSerialnumber", DataTypeEnum.adVarChar, _
-                                                 ParameterDirectionEnum.adParamInput, 50, vDatetime)
             .Parameters.Append(sSnParam)
-            '.Parameters.Append(sStationParam)
-            .Parameters.Append(sProcessParam)
-            .Parameters.Append(sDdatetimeParam)
+
             getComponentData = .Execute
         End With
 
