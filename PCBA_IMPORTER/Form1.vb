@@ -80,6 +80,149 @@ Public Class Form1
 
 
 
+    '    Sub ExportData()
+    '        Dim vBullEyesObj As New clsBullEyes
+    '        With vBullEyesObj
+    '            'Query Data
+    '            Dim rs As New ADODB.Recordset
+    '            Dim vNewFromDate As Date = CDate(lblFrom.Text).AddSeconds(1)
+    '            Dim vDateFrom As String = vNewFromDate.ToString
+    '            Dim vDateTo As String = lblTo.Text
+
+    '            'rs = objFits.getPCBAlist(vDateFrom, vDateTo)
+    '            rs = objFits.getEvents(vDateFrom, vDateTo)
+
+    '            If rs.RecordCount = 0 Then
+    '                lblLastDate.Text = lblNextRun.Text : Application.DoEvents()
+    '            End If
+
+    '            Do While Not rs.EOF
+    '                tssStatus.Text = "Importing......." & rs.AbsolutePosition & "/" & rs.RecordCount : Application.DoEvents()
+    '                .operation = rs.Fields("operation").Value
+    '                .datetimeout = IIf(IsDBNull(rs.Fields("date_time_checkout").Value), "", rs.Fields("date_time_checkout").Value)
+
+    '                If Not (.operation = "30" Or .operation = "120" Or .operation = "1100") Then
+    '                    GoTo nextSN
+    '                End If
+
+    '                .serialnumber = rs.Fields("serial_no").Value
+    '                .sn_attr_code = rs.Fields("sn_attr_code").Value
+    '                .trans_seq = rs.Fields("trans_seq").Value
+
+
+
+    '                Dim vPCBSN As String = ""
+    '                Dim vPCBPn As String = ""
+    '                Dim vPCBRev As String = ""
+    '                Dim vAtrrRst As ADODB.Recordset
+    '                vAtrrRst = objFits.getParameters(.serialnumber, .sn_attr_code, .trans_seq)
+    '                Do While Not vAtrrRst.EOF
+    '                    If vAtrrRst.Fields("attribute_code").Value = "302" Then
+    '                        vPCBSN = vAtrrRst.Fields("attribute_value").Value
+    '                    End If
+    '                    If vAtrrRst.Fields("attribute_code").Value = "110001" Then
+    '                        vPCBPn = vAtrrRst.Fields("attribute_value").Value
+    '                    End If
+    '                    If vAtrrRst.Fields("attribute_code").Value = "110002" Then
+    '                        vPCBrev = vAtrrRst.Fields("attribute_value").Value
+    '                    End If
+    '                    vAtrrRst.MoveNext()
+    '                Loop
+    '                If vPCBSN = "" Then
+    '                    GoTo nextSN
+    '                End If
+
+    '                '-----Get PCB Info -----
+    '                'History (only EBT)
+    '                Dim vPCBHistory As ADODB.Recordset
+    '                vPCBHistory = objFits.getPCBAlist(vPCBSN)
+    '                'Comp.onent tracking (Only value is not 0)
+    '                If vPCBHistory.RecordCount = 0 Then
+    '                    GoTo nextSN
+    '                End If
+    '                vPCBHistory.MoveLast()
+
+    '                Dim vEBTstation As String = vPCBHistory.Fields("operation").Value
+    '                .operation = vEBTstation
+
+    '                Dim vDateOutPCB As String = vPCBHistory.Fields("date_time").Value
+    '                Dim vTesterPCB As String = "ATE_AC100M_062"
+    '                '-----------------------
+    '                'Modify all Parameter
+    '                Dim vTempTimeOut As String = .datetimeout
+
+    '                .serialnumber = vPCBSN
+    '                .workorder = vPCBHistory.Fields("workorder").Value
+    '                .model = "PCBA" 'set family
+
+    '                .partnumber = vPCBPn 'rs.Fields("part_no").Value
+    '                .operation = vEBTstation 'rs.Fields("operation").Value
+    '                .operationname = IIf(IsDBNull(vPCBHistory.Fields("description").Value), "", vPCBHistory.Fields("description").Value)
+    '                .buildtype = "PROD" 'rs.Fields("buildtype").Value
+    '                .runtype = "100" 'rs.Fields("runtype").Value
+    '                .employee = vPCBHistory.Fields("emp_no").Value
+    '                .sn_attr_code = rs.Fields("sn_attr_code").Value
+    '                .trans_seq = rs.Fields("trans_seq").Value 'vPCBHistory.Fields("date_time").Value
+    '                .datetimein = vPCBHistory.Fields("date_time").Value
+    '                .datetimeout = vPCBHistory.Fields("date_time").Value
+    '                .shift = "DAY" 'rs.Fields("shift").Value
+    '                .tester = "" 'rs.Fields("equip_id").Value
+    '                .outputPath = vWorkingDir
+    '                .result = "PASS" 'IIf(IsDBNull(rs.Fields("disp_code").Value), "PASS", rs.Fields("disp_code").Value)
+    '                .disposecode = "PASS" 'IIf(IsDBNull(rs.Fields("disp_code").Value), "", rs.Fields("disp_code").Value)
+    '                .next_operation = "382" ' objFits.getNextStation(.serialnumber, .operation, .trans_seq, .model)
+    '                'End Modify
+
+
+
+
+    '                'Get Testing Data
+    '                '1)get Process from BullsEye -- by Station.
+    '                Dim vProcess As String = requestData(vServiceURL & "production/station/" & .operation & "/" & .model & "/")
+    '                '2)get Measurement data.
+    '                Dim vTestDataRst As New ADODB.Recordset
+
+
+    '                If vProcess <> "" And vProcess <> "None" Then
+    '                    vTestDataRst = objAutoTest.getTestData(.serialnumber, vProcess, .tester, .datetimeout)
+    '                Else
+    '                    vTestDataRst = Nothing
+    '                End If
+
+    '                'Get Component--
+    '                Dim vRstComponent As ADODB.Recordset
+    '                vRstComponent = objFits.getComponentData(.serialnumber)
+    '                If vRstComponent.RecordCount > 0 Then
+    '                    tssStatus.Text = "Uploading component data......of " & .serialnumber : Application.DoEvents()
+    '                End If
+    '                '---------------
+
+
+
+    '                '.makeXML(Nothing, vTestDataRst)
+    '                .makeXML(objFits.getParameters(.serialnumber, .sn_attr_code, .trans_seq), vTestDataRst, vRstComponent)
+
+
+
+    '                uploadData(.outputfile)
+    '                .datetimeout = vTempTimeOut
+
+    'nextSN:
+    '                lblLastDate.Text = .datetimeout : Application.DoEvents()
+    '                '---save last date to INI file---
+    '                objInI.WriteString("Last execution", "date", .datetimeout)
+    '                '--------------------------------
+    '                rs.MoveNext()
+    '            Loop
+    '        End With
+    '        '---Update From/To date
+    '        lblFrom.Text = lblLastDate.Text
+    '        lblTo.Text = getDateTo(lblLastDate.Text)
+    '        lblNextRun.Text = Now.AddMinutes(Val(objInI.GetString("import", "interval", "")))
+
+    '    End Sub
+
+
     Sub ExportData()
         Dim vBullEyesObj As New clsBullEyes
         With vBullEyesObj
@@ -89,8 +232,8 @@ Public Class Form1
             Dim vDateFrom As String = vNewFromDate.ToString
             Dim vDateTo As String = lblTo.Text
 
-            'rs = objFits.getPCBAlist(vDateFrom, vDateTo)
-            rs = objFits.getEvents(vDateFrom, vDateTo)
+            rs = objFits.getPCBAlist(vDateFrom, vDateTo)
+            'rs = objFits.getEvents(vDateFrom, vDateTo)
 
             If rs.RecordCount = 0 Then
                 lblLastDate.Text = lblNextRun.Text : Application.DoEvents()
@@ -99,77 +242,59 @@ Public Class Form1
             Do While Not rs.EOF
                 tssStatus.Text = "Importing......." & rs.AbsolutePosition & "/" & rs.RecordCount : Application.DoEvents()
                 .operation = rs.Fields("operation").Value
-                .datetimeout = IIf(IsDBNull(rs.Fields("date_time_checkout").Value), "", rs.Fields("date_time_checkout").Value)
 
-                If Not (.operation = "30" Or .operation = "120" Or .operation = "1100") Then
+                .datetimeout = IIf(IsDBNull(rs.Fields("date_time").Value), "", rs.Fields("date_time").Value)
+
+                If Not (.operation = "3261") Then
                     GoTo nextSN
                 End If
 
-                .serialnumber = rs.Fields("serial_no").Value
-                .sn_attr_code = rs.Fields("sn_attr_code").Value
-                .trans_seq = rs.Fields("trans_seq").Value
+                '.serialnumber = rs.Fields("serial_no").Value
+                '.sn_attr_code = rs.Fields("sn_attr_code").Value
+                '.trans_seq = rs.Fields("trans_seq").Value
 
-                
 
-                Dim vPCBSN As String = ""
-                Dim vPCBPn As String = ""
-                Dim vPCBRev As String = ""
-                Dim vAtrrRst As ADODB.Recordset
-                vAtrrRst = objFits.getParameters(.serialnumber, .sn_attr_code, .trans_seq)
-                Do While Not vAtrrRst.EOF
-                    If vAtrrRst.Fields("attribute_code").Value = "302" Then
-                        vPCBSN = vAtrrRst.Fields("attribute_value").Value
-                    End If
-                    If vAtrrRst.Fields("attribute_code").Value = "110001" Then
-                        vPCBPn = vAtrrRst.Fields("attribute_value").Value
-                    End If
-                    If vAtrrRst.Fields("attribute_code").Value = "110002" Then
-                        vPCBrev = vAtrrRst.Fields("attribute_value").Value
-                    End If
-                    vAtrrRst.MoveNext()
-                Loop
-                If vPCBSN = "" Then
-                    GoTo nextSN
-                End If
 
                 '-----Get PCB Info -----
-                'History (only EBT)
-                Dim vPCBHistory As ADODB.Recordset
-                vPCBHistory = objFits.getPCBAlist(vPCBSN)
-                'Comp.onent tracking (Only value is not 0)
-                If vPCBHistory.RecordCount = 0 Then
-                    GoTo nextSN
-                End If
-                vPCBHistory.MoveLast()
+                ''History (only EBT)
+                'Dim vPCBHistory As ADODB.Recordset
+                Dim vPCBSN As String = rs.Fields("serial_no").Value
 
-                Dim vEBTstation As String = vPCBHistory.Fields("operation").Value
-                .operation = vEBTstation
+                'vPCBHistory = objFits.getPCBAlist(vPCBSN)
+                ''Comp.onent tracking (Only value is not 0)
+                'If vPCBHistory.RecordCount = 0 Then
+                '    GoTo nextSN
+                'End If
+                'vPCBHistory.MoveLast()
 
-                Dim vDateOutPCB As String = vPCBHistory.Fields("date_time").Value
+                'Dim vEBTstation As String = vPCBHistory.Fields("operation").Value
+                '.operation = vEBTstation
+
+                'Dim vDateOutPCB As String = vPCBHistory.Fields("date_time").Value
                 Dim vTesterPCB As String = "ATE_AC100M_062"
                 '-----------------------
                 'Modify all Parameter
                 Dim vTempTimeOut As String = .datetimeout
 
                 .serialnumber = vPCBSN
-                .workorder = vPCBHistory.Fields("workorder").Value
+                .workorder = rs.Fields("workorder").Value
                 .model = "PCBA" 'set family
 
-                .partnumber = vPCBPn 'rs.Fields("part_no").Value
-                .operation = vEBTstation 'rs.Fields("operation").Value
-                .operationname = IIf(IsDBNull(vPCBHistory.Fields("description").Value), "", vPCBHistory.Fields("description").Value)
+                .partnumber = rs.Fields("part_no").Value
+                .operation = rs.Fields("operation").Value
+                .operationname = IIf(IsDBNull(rs.Fields("description").Value), "", rs.Fields("description").Value)
                 .buildtype = "PROD" 'rs.Fields("buildtype").Value
                 .runtype = "100" 'rs.Fields("runtype").Value
-                .employee = vPCBHistory.Fields("emp_no").Value
-                .sn_attr_code = rs.Fields("sn_attr_code").Value
+                .employee = rs.Fields("emp_no").Value
+                .sn_attr_code = "1001" 'rs.Fields("sn_attr_code").Value
                 .trans_seq = rs.Fields("trans_seq").Value 'vPCBHistory.Fields("date_time").Value
-                .datetimein = vPCBHistory.Fields("date_time").Value
-                .datetimeout = vPCBHistory.Fields("date_time").Value
+                .datetimein = rs.Fields("date_time").Value
+                .datetimeout = rs.Fields("date_time").Value
                 .shift = "DAY" 'rs.Fields("shift").Value
-                .tester = "" 'rs.Fields("equip_id").Value
+                .tester = vTesterPCB 'rs.Fields("equip_id").Value
                 .outputPath = vWorkingDir
-                .result = "PASS" 'IIf(IsDBNull(rs.Fields("disp_code").Value), "PASS", rs.Fields("disp_code").Value)
-                .disposecode = "PASS" 'IIf(IsDBNull(rs.Fields("disp_code").Value), "", rs.Fields("disp_code").Value)
+                .result = IIf(IsDBNull(rs.Fields("result").Value), "PASS", rs.Fields("result").Value)
+                .disposecode = IIf(IsDBNull(rs.Fields("result").Value), "", rs.Fields("result").Value)
                 .next_operation = "382" ' objFits.getNextStation(.serialnumber, .operation, .trans_seq, .model)
                 'End Modify
 
@@ -185,6 +310,7 @@ Public Class Form1
 
                 If vProcess <> "" And vProcess <> "None" Then
                     vTestDataRst = objAutoTest.getTestData(.serialnumber, vProcess, .tester, .datetimeout)
+                    '.tester = vTestDataRst.Fields("STATION_ID").Value
                 Else
                     vTestDataRst = Nothing
                 End If
@@ -192,6 +318,9 @@ Public Class Form1
                 'Get Component--
                 Dim vRstComponent As ADODB.Recordset
                 vRstComponent = objFits.getComponentData(.serialnumber)
+                If vRstComponent.RecordCount > 0 Then
+                    tssStatus.Text = "Uploading " & .serialnumber & " " & rs.AbsolutePosition & "/" & rs.RecordCount : Application.DoEvents()
+                End If
                 '---------------
 
 
@@ -308,7 +437,7 @@ nextSN:
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         objInI = New clsINI(Application.StartupPath & "\import.ini")
-        Timer1.Interval = (Val(objInI.GetString("import", "interval", "")) - 1) * 1000 * 60
+        Timer1.Interval = (Val(objInI.GetString("import", "interval", ""))) * 1000 * 60
         Timer1.Enabled = False
 
         vWorkingDir = objInI.GetString("path", "working dir", "")

@@ -55,6 +55,7 @@ Public Class clsFits
             "Password=" & vPassword & ";Database=" & vDatabase & ";"
 
         cn.ConnectionString = connectionString
+        cn.ConnectionTimeout = 300
         cn.Open()
         cn.CursorLocation = CursorLocationEnum.adUseClient
         connect = cn
@@ -138,7 +139,7 @@ Public Class clsFits
 
         Dim vSql As String = "select * " &
                             "from vw_SMTUnitHistoryTracking " &
-                            "where serial_no = ? and description like '%EBT%'"
+                            "where serial_no = ?"
 
         Dim cmd As New ADODB.Command()
         Dim sSnParam As ADODB.Parameter
@@ -149,12 +150,39 @@ Public Class clsFits
             .CommandType = CommandTypeEnum.adCmdText
             sSnParam = .CreateParameter("vDateFrom", DataTypeEnum.adVarChar,
                                                  ParameterDirectionEnum.adParamInput, 50, vSerialNumber)
-
             .Parameters.Append(sSnParam)
             getPCBAlist = .Execute
         End With
 
     End Function
+
+    Public Function getPCBAlist(vDateFrom As String, vDateTo As String) As ADODB.Recordset
+
+        Dim vSql As String = "select * " &
+                            "from vw_SMTUnitHistoryTracking " &
+                            "where operation = '3261' and date_time between ? and ?"
+
+        Dim cmd As New ADODB.Command()
+        Dim sDateFromParam As ADODB.Parameter
+        Dim sDateToParam As ADODB.Parameter
+
+        With cmd
+            .ActiveConnection = cn
+            .CommandText = vSql
+            .CommandType = CommandTypeEnum.adCmdText
+            sDateFromParam = .CreateParameter("vDateFrom", DataTypeEnum.adVarChar,
+                                                 ParameterDirectionEnum.adParamInput, 50, vDateFrom)
+            sDateToParam = .CreateParameter("vDateTo", DataTypeEnum.adVarChar,
+                                                 ParameterDirectionEnum.adParamInput, 50, vDateTo)
+            .Parameters.Append(sDateFromParam)
+            .Parameters.Append(sDateToParam)
+            .CommandTimeout = 300
+            getPCBAlist = .Execute
+        End With
+
+    End Function
+
+
 
     Public Function getComponentData(vSerialnumber As String) As ADODB.Recordset
 
@@ -566,10 +594,11 @@ NextLoop:
             vSql = "SELECT STEP_RESULT.UUT_RESULT, STEP_RESULT.STEP_NAME, " & _
                 "STEP_RESULT.STEP_GROUP, STEP_RESULT.STATUS, PROP_RESULT.DATA, " & _
                 "PROP_NUMERICLIMIT.HIGH_LIMIT, PROP_NUMERICLIMIT.LOW_LIMIT, " & _
-                "PROP_NUMERICLIMIT.UNITS, PROP_NUMERICLIMIT.COMP_OPERATOR,STEP_RESULT.ID " & _
+                "PROP_NUMERICLIMIT.UNITS, PROP_NUMERICLIMIT.COMP_OPERATOR,STEP_RESULT.ID,UUT_RESULT.STATION_ID " & _
                 "FROM STEP_RESULT INNER JOIN " & _
                          "PROP_RESULT ON STEP_RESULT.ID = PROP_RESULT.STEP_RESULT INNER JOIN " & _
-                         "PROP_NUMERICLIMIT ON PROP_RESULT.ID = PROP_NUMERICLIMIT.PROP_RESULT " & _
+                         "PROP_NUMERICLIMIT ON PROP_RESULT.ID = PROP_NUMERICLIMIT.PROP_RESULT INNER JOIN " & _
+                         "UUT_RESULT ON STEP_RESULT.UUT_RESULT = UUT_RESULT.ID " & _
                 "WHERE(STEP_RESULT.UUT_RESULT = ? and PROP_RESULT.DATA<>'0' )"
             Dim cmd2 As New ADODB.Command()
             Dim sUUTparam As ADODB.Parameter
