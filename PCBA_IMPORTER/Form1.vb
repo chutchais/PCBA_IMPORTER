@@ -79,7 +79,7 @@ Public Class Form1
     End Sub
 
 
-
+    '    '###Look at Acacia Event table first.
     '    Sub ExportData()
     '        Dim vBullEyesObj As New clsBullEyes
     '        With vBullEyesObj
@@ -223,6 +223,7 @@ Public Class Form1
     '    End Sub
 
 
+    '##Look at vw_SMTUnitHistoryTracking First.
     Sub ExportData()
         Dim vBullEyesObj As New clsBullEyes
         With vBullEyesObj
@@ -236,7 +237,7 @@ Public Class Form1
             'rs = objFits.getEvents(vDateFrom, vDateTo)
 
             If rs.RecordCount = 0 Then
-                lblLastDate.Text = lblNextRun.Text : Application.DoEvents()
+                lblLastDate.Text = Now() : Application.DoEvents() ' lblNextRun.Text 
             End If
 
             Do While Not rs.EOF
@@ -343,6 +344,9 @@ nextSN:
         End With
         '---Update From/To date
         lblFrom.Text = lblLastDate.Text
+        '---save last date to INI file---
+        objInI.WriteString("Last execution", "date", lblLastDate.Text)
+        '--------------------------------
         lblTo.Text = getDateTo(lblLastDate.Text)
         lblNextRun.Text = Now.AddMinutes(Val(objInI.GetString("import", "interval", "")))
 
