@@ -237,7 +237,9 @@ Public Class Form1
             'rs = objFits.getEvents(vDateFrom, vDateTo)
 
             If rs.RecordCount = 0 Then
-                lblLastDate.Text = Now() : Application.DoEvents() ' lblNextRun.Text 
+                'lblLastDate.Text = Now() : Application.DoEvents() ' lblNextRun.Text 
+                'edit by Chutchai S On Jan 24,2017
+                lblLastDate.Text = lblNextRun.Text : Application.DoEvents()
             End If
 
             Do While Not rs.EOF
@@ -452,7 +454,8 @@ nextSN:
 
 
         initialControl()
-        Me.Text = Me.Text + " (Target : " + vServiceURL + ")"
+        'Me.Text = Me.Text + " (Target : " + vServiceURL + ")"
+        Me.Text = Me.Text + " (Target : " + vServiceURL + ") version : " & Application.ProductVersion.Trim
     End Sub
 
     Private Sub btnImport_Click(sender As Object, e As EventArgs) Handles btnImport.Click
